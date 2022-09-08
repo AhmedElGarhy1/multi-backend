@@ -13,10 +13,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
 });
 
-userSchema.statics.signup = async function (email, password) {
-  if (!email || email === "" || !password || password === "") {
+userSchema.statics.signup = async function (email, password, username) {
+  if (!email || !password || !username) {
     throw Error("All Fields Must Be Filled");
   }
   if (!validator.isEmail(email)) {
@@ -34,11 +38,12 @@ userSchema.statics.signup = async function (email, password) {
   const user = await this.create({
     email,
     password: hash,
+    username,
   });
   return user;
 };
 userSchema.statics.login = async function (email, password) {
-  if (!email || email === "" || !password || password === "") {
+  if (!email || !password) {
     throw Error("All Fields Must Be Filled");
   }
   const user = await this.findOne({ email });

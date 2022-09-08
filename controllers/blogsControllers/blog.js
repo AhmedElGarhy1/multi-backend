@@ -42,7 +42,6 @@ const addBlog = async (req, res) => {
 // delete blog
 const deleteBlog = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No Such Blog" });
   }
